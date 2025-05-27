@@ -1,0 +1,124 @@
+[gd_scene load_steps=8 format=3 uid="uid://ccxu1arayoywo"]
+
+[ext_resource type="Theme" uid="uid://bchcbhuiondfm" path="res://UI/main_theme.tres" id="1_ew8os"]
+[ext_resource type="Script" path="res://screen/control.gd" id="1_spm8v"]
+[ext_resource type="FontFile" uid="uid://ie6aunripk58" path="res://assets/fonts/SmileySans-Oblique.otf" id="2_opaqb"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_alfvb"]
+
+[sub_resource type="Animation" id="Animation_76bs5"]
+resource_name = "enter"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.433333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1925, 407), Vector2(1535, 407)]
+}
+
+[sub_resource type="Animation" id="Animation_u8gkx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1535, 407)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hhqhw"]
+_data = {
+"RESET": SubResource("Animation_u8gkx"),
+"enter": SubResource("Animation_76bs5")
+}
+
+[node name="TitleScreen" type="Node2D"]
+position = Vector2(2, -2)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -4.0
+offset_top = 1.0
+offset_right = 1910.0
+offset_bottom = 754.0
+grow_horizontal = 2
+size_flags_vertical = 4
+theme = ExtResource("1_ew8os")
+script = ExtResource("1_spm8v")
+
+[node name="Label" type="Label" parent="Control"]
+auto_translate_mode = 2
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -1.0
+offset_top = 138.0
+offset_right = -1.0
+offset_bottom = 247.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_opaqb")
+theme_override_font_sizes/font_size = 90
+text = "golden_flower
+"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1535.0
+offset_top = -346.0
+offset_right = -171.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StartGame" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "start_game"
+
+[node name="OnlineGame" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "online_game"
+
+[node name="Setting" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "setting"
+
+[node name="ExitGame" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "exit_game"
+
+[node name="OptionButton" type="OptionButton" parent="Control/VBoxContainer"]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_alfvb")
+item_count = 2
+popup/item_0/text = "中文"
+popup/item_0/id = 1
+popup/item_1/text = "English"
+popup/item_1/id = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
+libraries = {
+"": SubResource("AnimationLibrary_hhqhw")
+}
+autoplay = "enter"
+
+[connection signal="item_selected" from="Control/VBoxContainer/OptionButton" to="Control" method="_on_option_button_item_selected"]
